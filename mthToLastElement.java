@@ -6,68 +6,68 @@ import java.io.*;
 import java.util.*;
 
 public class Solution {
-    
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        int index = input.nextInt();
-        CustomLinkedList a = new CustomLinkedList();
-        
-        while (input.hasNextInt()) {
-            a.insertAfter(input.nextInt());
-        }
-        
-        System.out.println((a.mthToLastElement(index) != null) ? a.mthToLastElement(index).data : "NIL");
-        
+
+ public static void main(String[] args) {
+  Scanner input = new Scanner(System.in);
+  int index = input.nextInt();
+  CustomLinkedList a = new CustomLinkedList();
+
+  while (input.hasNextInt()) {
+   a.insertAfter(input.nextInt());
+  }
+
+  System.out.println((a.mthToLastElement(index) != null) ? a.mthToLastElement(index).data : "NIL");
+
+ }
+
+ private static class CustomLinkedList {
+
+  Node head;
+
+  private class Node {
+   Node next;
+   int data;
+
+   public Node(int data) {
+    this.data = data;
+    next = null;
+   }
+  }
+
+  public void insertBefore(int data) {
+   Node node = new Node(data);
+   node.next = head;
+   head = node;
+  }
+
+  public void insertAfter(int data) {
+   Node node = new Node(data);
+   if (head == null) {
+    head = node;
+   } else {
+    Node temp = head;
+    while (temp.next != null) {
+     temp = temp.next;
     }
-    
-private static class CustomLinkedList {
-   Node head;
+    temp.next = node;
+   }
+  }
 
-	private class Node {
-	Node next;
-    Node prev;
-	int data;
+  public Node mthToLastElement(int len) {
+   Node current = head;
+   Node follower = head;
 
-		public Node(int data) {
-			this.data = data;
-			next = null;
-		}
-	}
-	
-	public void insertBefore(int data) {
-		Node node = new Node(data);
-		node.next = head;
-		head = node;
-	}
-    
-    public void insertAfter(int data) {
-        Node node = new Node(data);
-        if (head == null) {
-            head = node;
-        } else {
-            Node temp = head;
-            while (temp.next != null) {
-                temp = temp.next;
-            }
-            temp.next = node;
-        }
-    }
-    
-	public Node mthToLastElement(int  len) {
-		Node current = head;
-		Node follower = head;
+   for (int i = 0; i < len - 1; i++) {
+    if (current.next == null) return null;
+    current = current.next;
+   }
 
-		for (int i = 0; i < len - 1; i++) {
-			if (current.next == null) return null;
-			current = current.next;
-		}
+   while (current.next != null) {
+    current = current.next;
+    follower = follower.next;
+   }
 
-		while (current.next != null) {
-			current = current.next;
-			follower = follower.next;
-		}
-
-		return follower;
-	} 
-}
+   return follower;
+  }
+ }
 }
